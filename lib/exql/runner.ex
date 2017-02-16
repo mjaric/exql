@@ -46,7 +46,8 @@ defmodule Exql.Runner do
 
   defp create_params(params) do
     Enum.map(params, fn({k, v}) ->
-      %Tds.Parameter{name: "@#{Atom.to_string(k)}", value: v}
+      k = if is_atom(k), do: Atom.to_string(k), else: k
+      %Tds.Parameter{name: "@#{k}", value: v}
     end)
   end
 
