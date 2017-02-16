@@ -1,6 +1,13 @@
 defmodule Exql.Transformer do
 
   @doc """
+  Transforms a Tds.Error into a tuple {:error, msg_text}.
+  """
+  def transform({:error, %Tds.Error{mssql: %{msg_text: msg_text}}}, _) do
+    {:error, msg_text }
+  end
+
+  @doc """
   Transforms a Tds.Result into a list of maps representing the resultset.
   """
   def transform({:ok, %Tds.Result{columns: cols, rows: rows}}, :all) do
